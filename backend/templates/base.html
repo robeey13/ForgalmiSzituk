@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Quiz App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                <i class="fas fa-brain"></i>
+                Quiz App
+            </a>
+            <nav class="nav-links">
+                {% if logged_in_user %}
+                    <span class="user-welcome">Üdvözlünk, {{ logged_in_user }}!</span>
+                    <a href="{{ url_for('list_users') }}" class="nav-link">Felhasználók</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">Kijelentkezés</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">Bejelentkezés</a>
+                    <a href="{{ url_for('register') }}" class="nav-link highlight">Regisztráció</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; {{ 2025 }} Quiz App - Minden jog fenntartva</p>
+        </div>
+    </footer>
+
+    <script>
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = passwordInput.nextElementSibling.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.classList.remove('fa-eye');
+                toggleButton.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.classList.remove('fa-eye-slash');
+                toggleButton.classList.add('fa-eye');
+            }
+        }
+    </script>
+    
+</body>
+</html>

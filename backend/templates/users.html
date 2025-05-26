@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Felhasználók - Quiz App{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="text-center mb-3">
+        <i class="fas fa-users"></i> Regisztrált felhasználók
+    </h2>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Felhasználónév</th>
+                    <th style="text-align: right;">Pontszám</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td style="text-align: right;">{{ user.score }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="text-center mt-3">
+        <a href="{{ url_for('index') }}" class="btn">
+            <i class="fas fa-arrow-left"></i> Vissza a főoldalra
+        </a>
+    </div>
+</div>
+{% endblock %}

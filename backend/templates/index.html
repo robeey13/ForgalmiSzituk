@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Főoldal - Quiz App{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1 class="hero-title">
+        <i class="fas fa-brain"></i> 
+        Üdvözöljük a Quiz Appban!
+    </h1>
+    
+    <p class="hero-description">
+        Tesztelje tudását különböző témakörökben, versenyezzen másokkal és tanuljon játékosan.
+    </p>
+    
+    {% if logged_in_user %}
+        <div class="cta-container">
+            <h2 class="cta-title">Kezdjen el játszani most!</h2>
+            <a href="#" class="btn btn-block btn-action">
+                <i class="fas fa-play"></i> Kvíz indítása
+            </a>
+        </div>
+    {% else %}
+        <div class="action-buttons">
+            <a href="{{ url_for('register') }}" class="btn btn-action">
+                <i class="fas fa-user-plus"></i> Regisztráció
+            </a>
+            <a href="{{ url_for('login') }}" class="btn">
+                <i class="fas fa-sign-in-alt"></i> Bejelentkezés
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<div class="mt-4">
+    <h2 class="text-center mb-3">Miért válassza a Quiz Appot?</h2>
+    
+    <div class="features-grid">
+        <div class="card">
+            <div class="card-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="card-title">Gyors és szórakoztató</h3>
+            <p class="card-text">Rövid, érdekes kérdések várják - bárhol, bármikor játszhat</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h3 class="card-title">Versenyek</h3>
+            <p class="card-text">Versenyezzen másokkal és érjen el minél jobb helyezést</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="card-title">Fejlődés követése</h3>
+            <p class="card-text">Kövesse nyomon eredményeit és fejlődését</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
