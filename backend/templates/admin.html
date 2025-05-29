@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="nav">
+        <a href="{{ url_for('index') }}">Főoldal</a>
+        <a href="{{ url_for('logout') }}">Kijelentkezés</a>
+    </div>
+    
+    <h1>Admin Panel</h1>
+    <p>Bejelentkezve: {{ logged_in_user }}</p>
+
+    
+    <h2>Felhasználók kezelése</h2>
+    <h1>Felhasználó szám: <span>{{ users|length }}</span></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Felhasználónév</th>
+                <th>Pontszám</th>
+                <th>Admin</th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.score }}</td>
+                <td>{{ 'Igen' if user.is_admin else 'Nem' }}</td>
+                <td>
+                    {% if user.username != logged_in_user %}
+                    <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Biztosan törölni szeretnéd ezt a felhasználót?')">Törlés</button>
+                    </form>
+                    
+                    {% if not user.is_admin %}
+                    <form method="POST" action="{{ url_for('make_admin', user_id=user.id) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-success">Admin jogok adása</button>
+                    </form>
+                    {% else %}
+                    <form method="POST" action="{{ url_for('remove_admin', user_id=user.id) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-warning">Admin jogok elvétele</button>
+                    </form>
+                    {% endif %}
+                    {% else %}
+                    <span style="color: gray;">Saját fiók</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

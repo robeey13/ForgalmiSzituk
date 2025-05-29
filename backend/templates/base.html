@@ -17,6 +17,9 @@
             <nav class="nav-links">
                 {% if logged_in_user %}
                     <span class="user-welcome">Üdvözlünk, {{ logged_in_user }}!</span>
+                {% if is_admin %}
+                    <a href="{{ url_for('admin_panel') }}" class="nav-link">Admin Panel</a>
+                {% endif %}
                     <a href="{{ url_for('list_users') }}" class="nav-link">Felhasználók</a>
                     <a href="{{ url_for('logout') }}" class="nav-link">Kijelentkezés</a>
                 {% else %}
