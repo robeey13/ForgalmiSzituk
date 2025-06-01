@@ -14,13 +14,6 @@ py app.py
 És elfog indulni a webszerver.
 
 
-Biztonsági fejlesztések:
-
-Jelszavak hashelése (jelenleg nem biztonságos)
-Session timeout beállítása
-Bruteforce védelem a bejelentkezésnél
-
-
 Felhasználói élmény:
 
 Egyéni profillap statisztikákkal
