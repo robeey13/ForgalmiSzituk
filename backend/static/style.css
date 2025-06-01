@@ -4,18 +4,15 @@
     --burgundy: #C80036;
     --navy: #0C1844;
     
-    /* New gradient variations */
     --gradient-primary: linear-gradient(135deg, var(--burgundy) 0%, var(--coral) 100%);
     --gradient-secondary: linear-gradient(135deg, var(--navy) 0%, #2C3E7B 100%);
     --cream-gradient: linear-gradient(135deg, var(--cream) 0%, #F8E4C0 100%);
     
-    /* Shadow variations */
     --shadow-sm: 0 2px 8px rgba(12, 24, 68, 0.15);
     --shadow-md: 0 4px 12px rgba(12, 24, 68, 0.2);
     --shadow-lg: 0 8px 24px rgba(12, 24, 68, 0.25);
 }
 
-/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -73,23 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.8em;
 }
 
-/* Animated Background Pattern (subtle) */
-.bg-pattern {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-    background-image: 
-        radial-gradient(circle at 25% 35%, rgba(255, 105, 105, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 75% 65%, rgba(200, 0, 54, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(12, 24, 68, 0.025) 0%, transparent 50%);
-}
 
-/* Header & Navigation */
 .navbar {
     background-color: rgba(12, 24, 68, 0.95);
     backdrop-filter: blur(10px);
@@ -208,14 +189,12 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--coral);
 }
 
-/* Main Content */
 .main-content {
     min-height: calc(100vh - 130px);
     padding: 2rem 0;
     position: relative;
 }
 
-/* Hero Section */
 .hero-section {
     text-align: center;
     padding: 4rem 1rem;
@@ -287,7 +266,6 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0.9;
 }
 
-/* Cards */
 .card {
     background-color: white;
     border-radius: 12px;
@@ -364,7 +342,6 @@ h1, h2, h3, h4, h5, h6 {
     gap: 2rem;
 }
 
-/* Forms */
 .form-container {
     max-width: 550px;
     margin: 0 auto;
@@ -496,7 +473,6 @@ h1, h2, h3, h4, h5, h6 {
     border-top: 1px solid #eee;
 }
 
-/* Buttons */
 .btn {
     display: inline-block;
     padding: 0.85rem 1.8rem;
@@ -565,7 +541,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem;
 }
 
-/* Tables */
 .table-container {
     overflow-x: auto;
     border-radius: 12px;
@@ -612,7 +587,7 @@ tbody tr:hover {
     transform: scale(1.01);
 }
 
-/* Ranglista stílusok */
+
 .rank-gold {
     background-color: rgba(255, 215, 0);
     position: relative;
@@ -657,7 +632,7 @@ table tbody tr.rank-silver {
     margin-right: 5px;
 }
 
-/* Hover effektus az összes sorra */
+
 tbody tr:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -669,7 +644,7 @@ tbody tr:hover {
     font-weight: bold;
 
 }
-/* Alerts */
+
 .alert {
     padding: 1.2rem;
     border-radius: 8px;
@@ -715,7 +690,6 @@ tbody tr:hover {
     border-left: 4px solid #155724;
 }
 
-/* CTA Section */
 .cta-container {
     background: var(--gradient-secondary);
     padding: 3rem 2rem;
@@ -760,7 +734,6 @@ tbody tr:hover {
     border-radius: 3px;
 }
 
-/* Footer */
 .footer {
     background-color: var(--navy);
     color: var(--cream);
@@ -781,7 +754,6 @@ tbody tr:hover {
     background: var(--gradient-primary);
 }
 
-/* Helper Classes */
 .text-center {
     text-align: center;
 }
@@ -798,7 +770,6 @@ tbody tr:hover {
     margin-bottom: 1.5rem;
 }
 
-/* Admin Panel Specific Styles */
 .btn-danger {
     background: linear-gradient(135deg, #ff5252 0%, #dc3545 100%);
     box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
@@ -830,8 +801,6 @@ tbody tr:hover {
     box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
 }
 
-
-/* Responsive Styles */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
