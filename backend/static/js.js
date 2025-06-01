@@ -1,6 +1,7 @@
 let currentRoad = 1;
 let score = 0;
 let totalQuestions = 4;
+let quizOver = false;
 
 const correctAnswers = {
   1: 'A',
@@ -16,10 +17,6 @@ function loadRoad(roadNumber) {
   // Clear current
   roadContainer.innerHTML = '';
 
-  if (roadNumber > totalQuestions) {
-  submitFinalScore();
-  return;
-  }   
 
   // Load CSS
   const oldLink = document.getElementById('dynamic-style');
@@ -40,6 +37,9 @@ function loadRoad(roadNumber) {
 }
 
 function submitAnswer(option) {
+
+  if (quizOver) return;
+
     console.log("User chose:", option);
     const isCorrect = (correctAnswers[currentRoad] === option)
 
@@ -51,6 +51,19 @@ function submitAnswer(option) {
     }
 
     currentRoad++;
+    if (currentRoad > totalQuestions) {
+        quizOver = true;
+        console.log("Kvíz vége. Elért pontszám: ", score);
+        submitFinalScore();
+
+        const allButtons = document.querySelectorAll('.option-button');
+        allButtons.forEach(button => {
+            button.disabled = true; 
+        });
+
+        return;
+    }
+
     loadRoad(currentRoad); // Load next situation
 }
 
@@ -80,7 +93,7 @@ function submitFinalScore() {
           <h2>Kvíz vége!</h2>
           <p>Elért pontszám: ${score}/${totalQuestions}</p>
           <p>A pontszám sikeresen elmentve!</p>
-          <a href="/" style="display:inline-block; margin-top: 20px;">Vissza a főoldalra</a>
+          <a href="/" class="btn" style="display:inline-block; margin-top: 20px;">Vissza a főoldalra</a>
         </div>
       `;
     } else {

@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, session, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import re
 
 app = Flask(__name__)
@@ -22,7 +23,8 @@ with app.app_context():
     db.create_all()
     admin_user = User.query.filter_by(username='admin').first()
     if not admin_user:
-        admin_user = User(username='admin', password='444', is_admin=True)
+        hashed_admin_password = generate_password_hash('444')
+        admin_user = User(username='admin', password=hashed_admin_password, is_admin=True)
         db.session.add(admin_user)
         db.session.commit()
         print(f"Admin felhasználó létrehozva: username='admin', password='{admin_user.password}'")
@@ -63,8 +65,10 @@ def index():
 @app.route('/users')
 def list_users():
     users = User.query.order_by(User.score.desc()).all()
+    logged_in_user = session.get('username')
+    logged_in_user_score = User.query.filter_by(username=logged_in_user).first().score if logged_in_user else 0
     is_admin = is_admin_user()
-    return render_template('users.html', users=users, logged_in_user=session.get('username'), is_admin=is_admin)
+    return render_template('users.html', users=users, logged_in_user_score=logged_in_user_score, logged_in_user=session.get('username'), is_admin=is_admin)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -72,8 +76,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        user = User.query.filter_by(username=username, password=password).first()
-        if user:
+        user = User.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password, password):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -99,7 +103,8 @@ def register():
             if not valid1:
                 error = msg1
             else:
-                new_user = User(username=username, password=password)
+                hashed_password = generate_password_hash(password)
+                new_user = User(username=username, password=hashed_password)
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect(url_for('login'))
@@ -109,6 +114,10 @@ def register():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
+
+
+
+
 
 @app.route('/admin')
 def admin_panel():
