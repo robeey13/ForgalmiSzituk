@@ -1,60 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Panel</title>
+    <title>Admin Panel - Quiz App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="nav">
-        <a href="{{ url_for('index') }}">Főoldal</a>
-        <a href="{{ url_for('logout') }}">Kijelentkezés</a>
+    
+    {% block content %}
+    <br>
+    <div class="hero-section">
+        
+        <h1 class="hero-title">
+            <i class="fas fa-shield-alt"></i> Admin Panel
+        </h1>
+        <p class="hero-description">
+            Felhasználói fiókok és jogosultságok kezelése
+        </p>
     </div>
-    
-    <h1>Admin Panel</h1>
-    <p>Bejelentkezve: {{ logged_in_user }}</p>
 
-    
-    <h2>Felhasználók kezelése</h2>
-    <h1>Felhasználó szám: <span>{{ users|length }}</span></h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Felhasználónév</th>
-                <th>Pontszám</th>
-                <th>Admin</th>
-                <th>Műveletek</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.score }}</td>
-                <td>{{ 'Igen' if user.is_admin else 'Nem' }}</td>
-                <td>
-                    {% if user.username != logged_in_user %}
-                    <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}" style="display: inline;">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Biztosan törölni szeretnéd ezt a felhasználót?')">Törlés</button>
-                    </form>
-                    
-                    {% if not user.is_admin %}
-                    <form method="POST" action="{{ url_for('make_admin', user_id=user.id) }}" style="display: inline;">
-                        <button type="submit" class="btn btn-success">Admin jogok adása</button>
-                    </form>
-                    {% else %}
-                    <form method="POST" action="{{ url_for('remove_admin', user_id=user.id) }}" style="display: inline;">
-                        <button type="submit" class="btn btn-warning">Admin jogok elvétele</button>
-                    </form>
-                    {% endif %}
-                    {% else %}
-                    <span style="color: gray;">Saját fiók</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="card">
+        <h2 class="card-title">
+            <i class="fas fa-users-cog"></i> Felhasználók kezelése
+        </h2>
+        
+        <div class="mb-3 text-center">
+            <span class="btn btn-action">
+                <i class="fas fa-user-friends"></i> Felhasználók száma: {{ users|length }}
+            </span>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Felhasználónév</th>
+                        <th>Pontszám</th>
+                        <th>Admin</th>
+                        <th>Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.score }}</td>
+                        <td>
+                            {% if user.is_admin %}
+                                <span class="badge badge-admin">
+                                    <i class="fas fa-check-circle"></i> Igen
+                                </span>
+                            {% else %}
+                                <span class="badge badge-normal">
+                                    <i class="fas fa-times-circle"></i> Nem
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="action-cell">
+                            {% if user.username != logged_in_user %}
+                                <div class="admin-actions">
+                                    <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Biztosan törölni szeretnéd ezt a felhasználót?')">
+                                            <i class="fas fa-trash-alt"></i> Törlés
+                                        </button>
+                                    </form>
+                                    
+                                    {% if not user.is_admin %}
+                                    <form method="POST" action="{{ url_for('make_admin', user_id=user.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-success">
+                                            <i class="fas fa-user-shield"></i> Admin jogok adása
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                    <form method="POST" action="{{ url_for('remove_admin', user_id=user.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-user-slash"></i> Admin jogok elvétele
+                                        </button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <span class="current-user-badge">
+                                    <i class="fas fa-user-circle"></i> Saját fiók
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn">
+                <i class="fas fa-home"></i> Vissza a főoldalra
+            </a>
+        </div>
+    </div>
+    {% endblock %}
 </body>
 </html>

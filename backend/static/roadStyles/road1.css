@@ -1,0 +1,34 @@
+#ut_kezdet {
+    position:absolute;
+    top:75%;
+    left:45%;
+    width: 10%;
+    height: 25%;
+    background: gray;
+  }
+  #ut_veg{
+    position:absolute;
+    top:45%;
+    left:0%;
+    width: 25%;
+    height: 10%;;
+    background: gray;
+  }
+  #kanyar_belso{
+    position:absolute;
+    top:55%;
+    left:25%;
+    border-top-right-radius:100%;
+    width: 20%;
+    height: 20%;
+    background: var(--img-color);
+  }
+  #kanyar_kulso{
+    position:absolute;
+    top:45%;
+    left:25%;
+    border-top-right-radius:100%;
+    width: 30%;
+    height: 30%;
+    background: gray;
+  }

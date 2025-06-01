@@ -612,6 +612,58 @@ tbody tr:hover {
     transform: scale(1.01);
 }
 
+/* Ranglista stílusok */
+.rank-gold {
+    background-color: rgba(255, 215, 0);
+    position: relative;
+}
+
+.rank-gold td:first-child {
+    color: var(--burgundy);
+    font-weight: bold;
+    position: relative;
+}
+
+.rank-gold td:first-child:before {
+    content: '🏆';
+    margin-right: 5px;
+}
+
+table tbody tr.rank-silver {
+    background-color: rgba(192, 192, 192) !important;
+}
+
+.rank-silver td:first-child {
+    color: var(--navy);
+    font-weight: bold;
+}
+
+.rank-silver td:first-child:before {
+    content: '🥈';
+    margin-right: 5px;
+}
+
+.rank-bronze {
+    background-color: rgba(205, 127, 50);
+}
+
+.rank-bronze td:first-child {
+    color: white;
+    font-weight: bold;
+}
+
+.rank-bronze td:first-child:before {
+    content: '🥉';
+    margin-right: 5px;
+}
+
+/* Hover effektus az összes sorra */
+tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
 /* Alerts */
 .alert {
     padding: 1.2rem;
@@ -772,6 +824,7 @@ tbody tr:hover {
     background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
     box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
 }
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {

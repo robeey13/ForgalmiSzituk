@@ -41,7 +41,7 @@ def validate_password(password):
 
 def validate_username(username):
     if len(username) <= 3:
-        return False, "Felhasználónév legalább 3 karakter hosszú kell legyen."
+        return False, "Felhasználónév legalább 4 karakter hosszú kell legyen."
     if username == 'admin':
         return False, "A 'admin' felhasználónév foglalt."
     return True, "Felhasználónév érvényes."
@@ -61,7 +61,7 @@ def index():
 
 @app.route('/users')
 def list_users():
-    users = User.query.all()
+    users = User.query.order_by(User.score.desc()).all()
     is_admin = is_admin_user()
     return render_template('users.html', users=users, logged_in_user=session.get('username'), is_admin=is_admin)
 
@@ -150,13 +150,45 @@ def remove_admin(user_id):
     
     user = User.query.get_or_404(user_id)
     
-    # Admin nem veheti el saját admin jogait
     if user.username == session['username']:
         return redirect(url_for('admin_panel'))
     
     user.is_admin = False
     db.session.commit()
     return redirect(url_for('admin_panel'))
+
+@app.route('/quiz')
+def quiz():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    return render_template('quiz.html', logged_in_user=session['username'])
+
+@app.route('/quiz/submit', methods=['POST'])
+def submit_quiz():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    # fúgec, ezt el sem bírom magyarázni
+
+    try:
+        adat = request.json.get('adat')
+
+        if adat is None:
+            return jsonify({'success': "False", 'error': 'Hibás adat formátum!'}), 400
+        
+        user = User.query.filter_by(username=session['username']).first()
+        if not user:
+            return jsonify({'success': "False", 'error': 'Felhasználó nem található!'}), 404
+        
+        user.score += adat
+        db.session.commit()
+
+        return jsonify({'success': "True", 'score': user.score}), 200
+    except Exception as e:
+        return jsonify({'success': "False", 'error': str(e)}), 500
+    
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

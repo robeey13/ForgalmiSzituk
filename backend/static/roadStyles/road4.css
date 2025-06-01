@@ -1,0 +1,15 @@
+.lane {
+  position: absolute;
+  top: 0%;
+  height: 100%;
+  width: 10%;
+  background: gray;
+}
+
+#lane-left {
+  left: 40%;
+}
+
+#lane-right {
+  left: 50%;
+}

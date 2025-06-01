@@ -18,7 +18,7 @@
             </thead>
             <tbody>
                 {% for user in users %}
-                <tr>
+                <tr class="{% if loop.index == 1 %}rank-gold{% elif loop.index == 2 %}rank-silver{% elif loop.index == 3 %}rank-bronze{% endif %}">
                     <td>{{ user.username }}</td>
                     <td style="text-align: right;">{{ user.score }}</td>
                 </tr>

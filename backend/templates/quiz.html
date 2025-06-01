@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz - Forgalmi Szituk</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='csstyle.css') }}">
+  <script src="{{ url_for('static', filename='js.js') }}"></script>
+</head>
+<body>
+
+    {% block content %}
+  <div class="main-container">
+    <div id="road-container">
+    </div>
+
+    <div class="question-section">
+      What is your favorite option?
+    </div>
+
+    <div class="buttons-section">
+      <button onclick="submitAnswer('A')">Option A</button>
+      <button onclick="submitAnswer('B')">Option B</button>
+      <button onclick="submitAnswer('C')">Option C</button>
+      <button onclick="submitAnswer('D')">Option D</button>
+    </div>
+  </div>
+
+  {% endblock %}
+</body>
+
+</html>

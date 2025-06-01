@@ -16,7 +16,7 @@
     {% if logged_in_user %}
         <div class="cta-container">
             <h2 class="cta-title">Kezdjen el játszani most!</h2>
-            <a href="#" class="btn btn-block btn-action">
+            <a href="{{ url_for('quiz') }}" class="btn btn-block btn-action">
                 <i class="fas fa-play"></i> Kvíz indítása
             </a>
         </div>
@@ -32,6 +32,9 @@
         </div>
     {% endif %}
 </div>
+
+
+<!--  TODO : Fejlődés nyomon követése  --> 
 
 <div class="mt-4">
     <h2 class="text-center mb-3">Miért válassza a Quiz Appot?</h2>
