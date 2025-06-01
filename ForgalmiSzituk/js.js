@@ -1,35 +1,45 @@
 let currentRoad = 1;
+let currentQuestion = 0;
+let questions = [];
 
-function loadRoad(roadNumber) {
-  const roadContainer = document.getElementById('road-container');
+fetch('questions.json')
+  .then(res => res.json())
+  .then(data => {
+    questions = data;
+    loadQuestion();
+    loadRoad(currentRoad);
+  });
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('question-text').textContent = q.question;
+  document.getElementById('question-image').src = q.image;
 
-  // Clear current
-  roadContainer.innerHTML = '';
+  const buttonsContainer = document.getElementById('answer-buttons');
+  buttonsContainer.innerHTML = '';
 
-  // Load CSS
-  const oldLink = document.getElementById('dynamic-style');
-  if (oldLink) oldLink.remove();
-
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = `roadStyles/road${roadNumber}.css`;
-  link.id = 'dynamic-style';
-  document.head.appendChild(link);
-
-  // Load HTML
-  fetch(`roadLayouts/road${roadNumber}.html`)
-    .then(response => response.text())
-    .then(html => {
-      roadContainer.innerHTML = html;
-    });
+  q.answers.forEach((answer, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = answer;
+    btn.onclick = () => submitAnswer(index);
+    buttonsContainer.appendChild(btn);
+  });
 }
 
-function submitAnswer(option) {
-  console.log("User chose:", option);
-  currentRoad++;
-  loadRoad(currentRoad); // Load next situation
-}
+function submitAnswer(selectedIndex) {
+  const correctIndex = questions[currentQuestion].correct;
 
-window.onload = () => {
-  loadRoad(currentRoad); // Load first road on start
-};
+  if (selectedIndex === correctIndex) {
+    currentQuestion++;
+    currentRoad++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+      loadRoad(currentRoad);
+    } else {
+      document.getElementById('question-text').textContent = '🎉 All situations completed!';
+      document.getElementById('answer-buttons').innerHTML = '';
+      document.getElementById('road-container').innerHTML = '';
+    }
+  } else {
+    alert("Incorrect! Try again.");
+  }
+}

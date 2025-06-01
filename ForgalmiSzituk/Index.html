@@ -7,22 +7,18 @@
   <link rel="stylesheet" href="style.css">
   <script src="js.js" defer></script>
 </head>
+
 <body>
-  <div class="main-container">
+<div class="main-container">
+  <div class="image-section">
     <div id="road-container">
-    </div>
-
-    <div class="question-section">
-      What is your favorite option?
-    </div>
-
-    <div class="buttons-section">
-      <button onclick="submitAnswer('A')">Option A</button>
-      <button onclick="submitAnswer('B')">Option B</button>
-      <button onclick="submitAnswer('C')">Option C</button>
-      <button onclick="submitAnswer('D')">Option D</button>
+        <img id="question-image" src="" alt="Question Image" />
     </div>
   </div>
+  <div class="question-section" id="question-text"></div>
+  <div class="buttons-section" id="answer-buttons"></div>
+</div>
+
 </body>
 
 </html>
