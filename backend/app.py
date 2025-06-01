@@ -56,8 +56,9 @@ def is_admin_user():
 @app.route('/')
 def index():
     logged_in_user = session.get('username')
+    logged_in_user_score = User.query.filter_by(username=logged_in_user).first().score if logged_in_user else 0
     is_admin = is_admin_user()
-    return render_template('index.html', logged_in_user=logged_in_user, is_admin=is_admin)
+    return render_template('index.html', logged_in_user_score=logged_in_user_score, logged_in_user=logged_in_user, is_admin=is_admin)
 
 @app.route('/users')
 def list_users():

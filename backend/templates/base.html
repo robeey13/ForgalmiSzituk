@@ -17,6 +17,9 @@
             <nav class="nav-links">
                 {% if logged_in_user %}
                     <span class="user-welcome">Üdvözlünk, {{ logged_in_user }}!</span>
+
+                    <span class="user-welcome">Pontszámod: {{ logged_in_user_score }}</span>
+
                 {% if is_admin %}
                     <a href="{{ url_for('admin_panel') }}" class="nav-link">Admin Panel</a>
                 {% endif %}

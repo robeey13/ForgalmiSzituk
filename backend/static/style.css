@@ -664,6 +664,11 @@ tbody tr:hover {
     z-index: 1;
 }
 
+.point{
+    color: var(--burgundy);
+    font-weight: bold;
+
+}
 /* Alerts */
 .alert {
     padding: 1.2rem;
