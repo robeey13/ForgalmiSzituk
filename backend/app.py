@@ -181,7 +181,6 @@ def submit_quiz():
     if 'username' not in session:
         return redirect(url_for('login'))
     
-    # fúgec, ezt el sem bírom magyarázni
 
     try:
         adat = request.json.get('adat')

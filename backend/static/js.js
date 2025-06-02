@@ -1,70 +1,73 @@
 let currentRoad = 1;
 let score = 0;
 let totalQuestions = 4;
+let currentQuestion = 0;
 let quizOver = false;
+let questions = [];
 
-const correctAnswers = {
-  1: 'A',
-  2: 'B',
-  3: 'C',
-  4: 'D',
-};
+
+fetch('static/questions.json')
+  .then(res => res.json())
+  .then(data => {
+    questions = data;
+    loadQuestion();
+  });
+
+
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('question-text').textContent = q.question;
+  document.getElementById('question-image').src = q.image;
+
+  const buttonsContainer = document.getElementById('answer-buttons');
+  buttonsContainer.innerHTML = '';
+
+  q.answers.forEach((answer, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = answer;
+    btn.onclick = () => submitAnswer(index);
+    buttonsContainer.appendChild(btn);
+  });
+}
 
 
 function loadRoad(roadNumber) {
-  const roadContainer = document.getElementById('road-container');
-
-  // Clear current
-  roadContainer.innerHTML = '';
-
-
-  // Load CSS
-  const oldLink = document.getElementById('dynamic-style');
-  if (oldLink) oldLink.remove();
-
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = `static/roadStyles/road${roadNumber}.css`;
-  link.id = 'dynamic-style';
-  document.head.appendChild(link);
-
-  // Load HTML
-  fetch(`static/roadLayouts/road${roadNumber}.html`)
-    .then(response => response.text())
-    .then(html => {
-      roadContainer.innerHTML = html;
-    });
+  const progress = document.getElementById('progress');
+  if (progress) {
+    progress.textContent = `Kérdés: ${roadNumber}/${totalQuestions}`;
+  }
 }
 
 function submitAnswer(option) {
-
   if (quizOver) return;
 
-    console.log("User chose:", option);
-    const isCorrect = (correctAnswers[currentRoad] === option)
+  console.log("User chose:", option);
+  const isCorrect = (questions[currentQuestion].correct === option);
 
-    if (isCorrect) {
-        score++;
-        console.log("Helyes válasz. Pont: ", score);
-    } else {
-        console.log("Helytelen válasz. Pont: ", score);
-    }
+  if (isCorrect) {
+    score++;
+    console.log("Helyes válasz. Pont: ", score);
+  } else {
+    console.log("Helytelen válasz. Pont: ", score);
+  }
 
-    currentRoad++;
-    if (currentRoad > totalQuestions) {
-        quizOver = true;
-        console.log("Kvíz vége. Elért pontszám: ", score);
-        submitFinalScore();
+  currentRoad++;
+  currentQuestion++;
 
-        const allButtons = document.querySelectorAll('.option-button');
-        allButtons.forEach(button => {
-            button.disabled = true; 
-        });
+  if (currentQuestion >= questions.length) {
+    quizOver = true;
+    console.log("Kvíz vége. Elért pontszám: ", score);
+    submitFinalScore();
 
-        return;
-    }
+    const allButtons = document.querySelectorAll('.option-button');
+    allButtons.forEach(button => {
+      button.disabled = true; 
+    });
+    return;
+  }
 
-    loadRoad(currentRoad); // Load next situation
+  loadQuestion();
+  loadRoad(currentRoad);
 }
 
 function submitFinalScore() {
@@ -110,5 +113,5 @@ function submitFinalScore() {
 }
 
 window.onload = () => {
-  loadRoad(currentRoad); // Load first road on start
+  loadRoad(currentRoad);
 };

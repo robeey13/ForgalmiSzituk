@@ -9,21 +9,16 @@
 <body>
 
     {% block content %}
-  <div class="main-container">
+<div class="main-container">
+  <div class="image-section">
     <div id="road-container">
-    </div>
-
-    <div class="question-section">
-      What is your favorite option?
-    </div>
-
-    <div class="buttons-section">
-      <button onclick="submitAnswer('A')" class="option-button">Option A</button>
-      <button onclick="submitAnswer('B')" class="option-button">Option B</button>
-      <button onclick="submitAnswer('C')" class="option-button">Option C</button>
-      <button onclick="submitAnswer('D')" class="option-button">Option D</button>
+        <img id="question-image" src="" alt="Question Image" />
     </div>
   </div>
+  <div class="question-section" id="question-text"></div>
+  <div class="buttons-section" id="answer-buttons"></div>
+  <div id="progress"></div>
+</div>
 
   {% endblock %}
 </body>

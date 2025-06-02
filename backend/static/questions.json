@@ -1,0 +1,46 @@
+[
+  {
+    "question": "What does this traffic sign indicate?",
+    "answers": [
+      "No U-turn",
+      "No entry",
+      "Yield",
+      "Stop"
+    ],
+    "correct": 3,
+    "image": "static/images/stop_sign.jpg"
+  },
+  {
+    "question": "What does this road marking signify?",
+    "answers": [
+      "Pedestrian crossing",
+      "Bicycle lane",
+      "Bus lane",
+      "No parking zone"
+    ],
+    "correct": 0,
+    "image": "static/images/pedestrian_crossing.jpg"
+  },
+  {
+    "question": "What is the meaning of this traffic light signal?",
+    "answers": [
+      "Proceed with caution",
+      "Stop",
+      "Go",
+      "Prepare to stop"
+    ],
+    "correct": 1,
+    "image": "static/images/red_traffic_light.jpg"
+  },
+  {
+    "question": "What does this sign warn drivers about?",
+    "answers": [
+      "Slippery road",
+      "Steep descent",
+      "Falling rocks",
+      "Road narrows"
+    ],
+    "correct": 0,
+    "image": "static/images/slippery_road_sign.jpg"
+  }
+]
